@@ -1,27 +1,36 @@
-class Main:
+import json
 
-    def choose_transaction():
-        while True:
-            print("Choose Transaction: ")
-            print("1. Create a Bank Account")
-            print("2. Deposit Money")
-            print("3. Withdraw Money")
-            print("4. Check the account balance")
-            print("5. Exit")
-            try:
-                choice = int(input("Enter here: "))
-                match choice:
-                    case 1:
-                        pass
-                    case 2:
-                        pass
-                    case 3:
-                        pass
-                    case 4:
-                        pass
-                    case 5:
-                        print("Bye Bye1")
+file_path = "Database\\accounts.json"
 
-            except ValueError:
-                print("Number Only!")
-    choose_transaction()
+def load_accounts(file_path = "Database\\accounts.json"):
+    try:
+        with open(file_path, "r") as file:
+            accounts = json.load(file)
+    except FileNotFoundError:
+        accounts = []
+    except json.JSONDecodeError:
+        accounts = []
+        print("Error loading file, Starting with empty list")
+    return accounts
+
+accounts = load_accounts()
+
+def create_account(account):
+    try:
+        account_number = int(input("Enter your account number: "))
+        pin = int(input("Create your pin(4 digits only!): "))
+
+        info = {"account-number":account_number, "pin":pin}
+        account.append(info)
+
+        try:
+            with open(file_path, "w") as file:
+                json.dump(account, file, indent=2)
+        except FileNotFoundError:
+            account = []
+            print("File not found!")
+    except ValueError:
+        print("Integer Only!")
+    
+
+create_account(accounts)
