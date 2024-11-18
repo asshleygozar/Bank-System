@@ -1,14 +1,7 @@
 [
-  {
-    "account-number": 192772,
-    "pin": 2827
-  },
-  {
-    "account-number": 2272,
-    "pin": 9282
-  },
-  {
-    "account-number": 292783,
-    "pin": 2827
-  }
+   {
+      "account-number": 123456,
+      "pin": 9876,
+      "balance": 1500
+   }
 ]
