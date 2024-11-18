@@ -3,5 +3,10 @@
       "account-number": 123456,
       "pin": 9876,
       "balance": 1500
+   },
+   {
+      "account-number": 672072,
+      "pin": 8282,
+      "balance": 4287
    }
 ]
