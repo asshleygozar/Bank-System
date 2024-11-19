@@ -52,8 +52,10 @@ class BankSystem:
                         self.temp_hold_account_number = account["account-number"]
                         print("Log In Successful!")
                         BankSystem.transactions(self)
+                        break
                     else:
                         print("Invalid Account Number or Pin")
+                        BankSystem.log_in(self, self.accounts)
             except ValueError:
                 print("Integer Input Only!")
     def create_account(self,account):
@@ -114,6 +116,8 @@ class BankSystem:
                                     json.dump(accounts, file, indent=3)
                             except FileNotFoundError:
                                 print("File not Found!")
+                            BankSystem.transactions(self)
+                            break
                         else:
                             print("Incorrect Pin!")
         except ValueError:
