@@ -101,22 +101,21 @@ class BankSystem:
 
     def deposit(self,accounts):
         try:
-            amount = int(input("Enter amount to deposit here: "))
-            pin = int(input("Enter your pin for confirmation: "))
+            deposit_money = int(input("Enter amount to deposit here: "))
             
             for account in accounts:
-                if account["pin"] == pin and account["account-number"] == self.temp_hold_account_number:
-                    total_amount = account["balance"] + amount
-                    account["balance"] = total_amount
-                    try:
-                        with open(self.file_path, "w") as file:
-                            json.dump(accounts,file, indent=3)
-                    except FileNotFoundError:
-                        print("File not Found!")
-                    print("Deposit Successful!")
-                    BankSystem.transactions(self)
-                else:
-                    print("Incorrect Pin!")
+               if account["account-number"] == self.temp_hold_account_number:
+                    while True:
+                        pin = int(input("Enter your pin for confirmation: "))
+                        if account["pin"] == pin:
+                            account["balance"] = account["balance"] + deposit_money
+                            try:
+                                with open(self.file_path, "w") as file:
+                                    json.dump(accounts, file, indent=3)
+                            except FileNotFoundError:
+                                print("File not Found!")
+                        else:
+                            print("Incorrect Pin!")
         except ValueError:
             print("Integer Only!")
     def withdraw(self,accounts):
