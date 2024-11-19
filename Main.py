@@ -6,7 +6,13 @@ class BankSystem:
     def __init__(self):
         self.file_path = "Database\\accounts.json"
         self.accounts = BankSystem.load_accounts()
-        self.temp_hold_account_number = 0
+        self.__temp_hold_accountnumber = 0 
+
+    def get_hold_data(self):
+       return self.__temp_hold_accountnumber
+    
+    def set_hold_data(self, account_number):
+        self.__temp_hold_accountnumber = account_number
 
     def load_accounts(file_path = "Database\\accounts.json"):
         try:
@@ -50,7 +56,7 @@ class BankSystem:
 
                     for account in accounts:
                         if account["account-number"] == account_number and account["pin"] == pin:
-                            self.temp_hold_account_number = account["account-number"]
+                            BankSystem.set_hold_data(self,account["account-number"])
                             print("Log In Successful!")
                             BankSystem.transactions(self)
                             break
@@ -105,7 +111,7 @@ class BankSystem:
             deposit_money = int(input("Enter amount to deposit here: "))
             
             for account in accounts:
-               if account["account-number"] == self.temp_hold_account_number:
+               if account["account-number"] == BankSystem.get_hold_data(self):
                     while True:
                         pin = int(input("Enter your pin for confirmation: "))
                         if account["pin"] == pin:
@@ -126,7 +132,7 @@ class BankSystem:
             try:
                 withdraw_money = int(input("Enter amount to withdraw here: "))
                 for account in accounts:
-                    if account["account-number"] == self.temp_hold_account_number:
+                    if account["account-number"] == BankSystem.get_hold_data(self):
                         if withdraw_money > account["balance"]:
                             print("Insufficient Balance!")
                         else:
@@ -148,7 +154,7 @@ class BankSystem:
     
     def check_balance(self,accounts):
         for account in accounts:
-            if account["account-number"] == self.temp_hold_account_number:
+            if account["account-number"] == BankSystem.get_hold_data(self):
                 print(f"Remaining Balance: {account["balance"]}")
                 break
                 BankSystem.transactions(self)
