@@ -1,4 +1,5 @@
 import json
+import sys
 import random
 class BankSystem:
 
@@ -34,9 +35,9 @@ class BankSystem:
                     case 2:
                         BankSystem.withdraw(self,self.accounts)
                     case 3:
-                        pass
+                        BankSystem.check_balance(self)
                     case 4:
-                        break
+                        sys.exit(0)
                     case _:
                         print("Invalid Input!")
             except ValueError:
@@ -113,31 +114,40 @@ class BankSystem:
                     except FileNotFoundError:
                         print("File not Found!")
                     print("Deposit Successful!")
+                    BankSystem.transactions(self)
                 else:
                     print("Incorrect Pin!")
         except ValueError:
             print("Integer Only!")
     def withdraw(self,accounts):
-        try:
-            withdraw_money = int(input("Enter amount to withdraw here: "))
-            pin = int(input("Enter your pin for confirmation: "))
-
-            for account in accounts:
-                if account["account-number"] == self.temp_hold_account_number and account["pin"] == pin:
-                    if withdraw_money > account["balance"]:
-                        print("Insufficient Balance!")
-                    else:
-                        total_amount = account["balance"] - withdraw_money
-                        account["balance"] = total_amount
-                        try:
-                            with open(self.file_path, "w") as file:
-                                json.dump(accounts, file, indent=3)
-                        except FileNotFoundError:
-                            print("File not found!")
-                    print("Transaction Successful!")
-                    BankSystem.transactions(self)
-        except ValueError:
-            print("Integer Number Only!")
+        while True:
+            try:
+                withdraw_money = int(input("Enter amount to withdraw here: "))
+                for account in accounts:
+                    if account["account-number"] == self.temp_hold_account_number:
+                        if withdraw_money > account["balance"]:
+                            print("Insufficient Balance!")
+                        else:
+                            while True:
+                                pin = int(input("Enter your pin for confirmation: "))
+                                if account["pin"] == pin:
+                                    account["balance"] = account["balance"] - withdraw_money
+                                    try:
+                                        with open(self.file_path, "w") as file:
+                                            json.dump(accounts, file, indent=3)
+                                    except FileNotFoundError:
+                                        print("File not Found!")
+                                    BankSystem.transactions(self)
+                                    break
+                                else:
+                                    print("Invalid Pin! Try Again")
+            except ValueError:
+                print("Integer Number Only!")
     
+    def check_balance(self,accounts):
+        for account in accounts:
+            if account["account-number"] == self.temp_hold_account_number:
+                print(f"Remaining Balance: {account["balance"]}")
+        BankSystem.transactions(self)
 bank = BankSystem()
 bank.action()
