@@ -35,7 +35,7 @@ class BankSystem:
                     case 2:
                         BankSystem.withdraw(self,self.accounts)
                     case 3:
-                        BankSystem.check_balance(self)
+                        BankSystem.check_balance(self, self.accounts)
                     case 4:
                         sys.exit(0)
                     case _:
@@ -44,18 +44,17 @@ class BankSystem:
                 print("Integer Only!")
     def log_in(self,accounts):
             try:
-                account_number = int(input("Enter your account number: "))
-                pin = int(input("Enter your pin: "))
+                while True:
+                    account_number = int(input("Enter your account number: "))
+                    pin = int(input("Enter your pin: "))
 
-                for account in accounts:
-                    if account["account-number"] == account_number and account["pin"] == pin:
-                        self.temp_hold_account_number = account["account-number"]
-                        print("Log In Successful!")
-                        BankSystem.transactions(self)
-                        break
-                    else:
-                        print("Invalid Account Number or Pin")
-                        BankSystem.log_in(self, self.accounts)
+                    for account in accounts:
+                        if account["account-number"] == account_number and account["pin"] == pin:
+                            self.temp_hold_account_number = account["account-number"]
+                            print("Log In Successful!")
+                            BankSystem.transactions(self)
+                            break
+                    print("Invalid Account Number or Pin")
             except ValueError:
                 print("Integer Input Only!")
     def create_account(self,account):
@@ -151,6 +150,9 @@ class BankSystem:
         for account in accounts:
             if account["account-number"] == self.temp_hold_account_number:
                 print(f"Remaining Balance: {account["balance"]}")
-        BankSystem.transactions(self)
+                break
+                BankSystem.transactions(self)
+        
+       
 bank = BankSystem()
 bank.action()
