@@ -1,20 +1,26 @@
 import json
 import sys
 import random
+
+
 class BankSystem:
 
     def __init__(self):
+
         self.file_path = "Database\\accounts.json"
         self.accounts = BankSystem.load_accounts()
         self.__temp_hold_accountnumber = 0 
 
     def get_hold_data(self):
+
        return self.__temp_hold_accountnumber
     
     def set_hold_data(self, account_number):
+
         self.__temp_hold_accountnumber = account_number
 
     def load_accounts(file_path = "Database\\accounts.json"):
+
         try:
             with open(file_path, "r") as file:
                 accounts = json.load(file)
@@ -26,6 +32,7 @@ class BankSystem:
         return accounts
         
     def transactions(self):
+
         while True:
             print("Choose your Transaction: ")
             print("1. Deposit")
@@ -48,7 +55,9 @@ class BankSystem:
                         print("Invalid Input!")
             except ValueError:
                 print("Integer Only!")
+
     def log_in(self,accounts):
+
             try:
                 while True:
                     account_number = int(input("Enter your account number: "))
@@ -63,7 +72,9 @@ class BankSystem:
                     print("Invalid Account Number or Pin")
             except ValueError:
                 print("Integer Input Only!")
+
     def create_account(self,account):
+
         try:
             account_number = random.randint(100000,999999)
             pin = int(input("Create your pin(4 digits only!): "))
@@ -86,6 +97,7 @@ class BankSystem:
 
     
     def action(self):
+
         try:
             while True:
                 print("Choose Action")
@@ -107,6 +119,7 @@ class BankSystem:
 
 
     def deposit(self,accounts):
+
         try:
             deposit_money = int(input("Enter amount to deposit here: "))
             
@@ -127,7 +140,9 @@ class BankSystem:
                             print("Incorrect Pin!")
         except ValueError:
             print("Integer Only!")
+
     def withdraw(self,accounts):
+
         while True:
             try:
                 withdraw_money = int(input("Enter amount to withdraw here: "))
@@ -158,7 +173,6 @@ class BankSystem:
                 print(f"Remaining Balance: {account["balance"]}")
                 break
                 BankSystem.transactions(self)
-        
        
 bank = BankSystem()
 bank.action()
