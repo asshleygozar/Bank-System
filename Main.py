@@ -42,9 +42,12 @@ class BankSystem:
                 while True:
                     account_number = int(input("Enter your account number: "))
                     pin = int(input("Enter your pin: "))
-
-                    BankDatabase.BankDatabase.log_in_validation(account_number,pin)
-                    break
+                    
+                    if len(str(pin)) > 4:
+                        print("4 digits of pin only!")
+                    else:
+                        BankDatabase.BankDatabase.log_in_validation(account_number,pin)
+                        break
             except ValueError:
                 print("Integer Input Only!")
 
