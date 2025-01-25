@@ -1,35 +1,13 @@
 import json
 import sys
 import random
+from Database import BankDatabase
 
 
 class BankSystem:
 
     def __init__(self):
-
-        self.file_path = "Database\\accounts.json"
-        self.accounts = BankSystem.load_accounts()
         self.__temp_hold_accountnumber = 0 
-
-    def get_hold_data(self):
-
-       return self.__temp_hold_accountnumber
-    
-    def set_hold_data(self, account_number):
-
-        self.__temp_hold_accountnumber = account_number
-
-    def load_accounts(file_path = "Database\\accounts.json"):
-
-        try:
-            with open(file_path, "r") as file:
-                accounts = json.load(file)
-        except FileNotFoundError:
-            accounts = []
-        except json.JSONDecodeError:
-            accounts = []
-            print("Error loading file, Starting with empty list")
-        return accounts
         
     def transactions(self):
 
@@ -75,28 +53,23 @@ class BankSystem:
             except ValueError:
                 print("Integer Input Only!")
 
-    def create_account(self,account):
+    def create_account():
 
         try:
             account_number = random.randint(100000,999999)
             pin = int(input("Create your pin(4 digits only!): "))
-            deposit = int(input("Please enter initial deposit: "))
-            print(f"Here is you Account Number: {account_number}")
-            print(f"Here is your pin: {pin}")
+            
+            if len(str(pin)) > 4:
+                print("4 digits of pin only!")
+            else:
+                deposit = int(input("Please enter initial deposit: "))
+                BankDatabase.BankDatabase.create_account(account_number,pin,deposit)
+                print(f"Here is you Account Number: {account_number}")
+                print(f"Here is your pin: {pin}")
 
-            info = {"account-number":account_number, "pin":pin, "balance": deposit}
-            account.append(info)
-
-            try:
-                with open(self.file_path, "w") as file:
-                    json.dump(account, file, indent=2)
-            except FileNotFoundError:
-                account = []
-                print("File not found!")
         except ValueError:
             print("Integer Only!")
-        BankSystem.log_in(self.accounts)
-
+            
     
     def action(self):
 
@@ -109,7 +82,7 @@ class BankSystem:
                 choice = int(input("Enter here: "))
                 match choice:
                     case 1:
-                        BankSystem.create_account(self.accounts)
+                        BankSystem.create_account()
                     case 2:
                         BankSystem.log_in(self,self.accounts)
                     case 3:
