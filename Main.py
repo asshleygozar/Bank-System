@@ -47,8 +47,10 @@ class BankSystem:
                         break
                     case 2:
                         BankSystem.withdraw(self,self.accounts)
+                        break
                     case 3:
                         BankSystem.check_balance(self, self.accounts)
+                        break
                     case 4:
                         sys.exit(0)
                     case _:
