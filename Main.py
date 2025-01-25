@@ -36,20 +36,15 @@ class BankSystem:
             except ValueError:
                 print("Integer Only!")
 
-    def log_in(self,accounts):
+    def log_in():
 
             try:
                 while True:
                     account_number = int(input("Enter your account number: "))
                     pin = int(input("Enter your pin: "))
 
-                    for account in accounts:
-                        if account["account-number"] == account_number and account["pin"] == pin:
-                            BankSystem.set_hold_data(self,account["account-number"])
-                            print("Log In Successful!")
-                            BankSystem.transactions(self)
-                            break
-                    print("Invalid Account Number or Pin")
+                    BankDatabase.BankDatabase.log_in_validation(account_number,pin)
+                    break
             except ValueError:
                 print("Integer Input Only!")
 
@@ -84,7 +79,8 @@ class BankSystem:
                     case 1:
                         BankSystem.create_account()
                     case 2:
-                        BankSystem.log_in(self,self.accounts)
+                        BankSystem.log_in()
+                        break
                     case 3:
                         break
                     case _:
