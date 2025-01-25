@@ -1,4 +1,3 @@
-import json
 import sys
 import random
 from Database import BankDatabase
