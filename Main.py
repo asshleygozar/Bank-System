@@ -92,41 +92,23 @@ class BankSystem:
         except ValueError:
             print("Integer Number Only!")
 
-
     def deposit(self):
 
         try:
-            deposit_money = int(input("Enter amount to deposit here: "))
+            deposit_money = int(input("Enter amount to deposit: "))
             BankDatabase.BankDatabase.deposit(self, deposit_money)
 
         except ValueError:
             print("Integer Only!")
 
-    def withdraw(self,accounts):
+    def withdraw(self):
 
-        while True:
-            try:
-                withdraw_money = int(input("Enter amount to withdraw here: "))
-                for account in accounts:
-                    if account["account-number"] == BankSystem.get_hold_data(self):
-                        if withdraw_money > account["balance"]:
-                            print("Insufficient Balance!")
-                        else:
-                            while True:
-                                pin = int(input("Enter your pin for confirmation: "))
-                                if account["pin"] == pin:
-                                    account["balance"] = account["balance"] - withdraw_money
-                                    try:
-                                        with open(self.file_path, "w") as file:
-                                            json.dump(accounts, file, indent=3)
-                                    except FileNotFoundError:
-                                        print("File not Found!")
-                                    BankSystem.transactions(self)
-                                    break
-                                else:
-                                    print("Invalid Pin! Try Again")
-            except ValueError:
-                print("Integer Number Only!")
+        try:
+            withdraw_money = int(input("Enter amount to withdraw: "))
+            BankDatabase.BankDatabase.withdraw(self, withdraw_money)
+
+        except ValueError:
+            print("Integer Only!")
     
     def check_balance(self,accounts):
         for account in accounts:
