@@ -110,12 +110,9 @@ class BankSystem:
         except ValueError:
             print("Integer Only!")
     
-    def check_balance(self,accounts):
-        for account in accounts:
-            if account["account-number"] == BankSystem.get_hold_data(self):
-                print(f"Remaining Balance: {account["balance"]}")
-                break
-                BankSystem.transactions(self)
+    def check_balance(self):
+        BankDatabase.BankDatabase.balance(self)
+        
        
 bank = BankSystem()
 bank.action()
