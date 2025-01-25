@@ -7,7 +7,7 @@ from Database import BankDatabase
 class BankSystem:
 
     def __init__(self):
-        self.__temp_hold_accountnumber = 0 
+        pass
         
     def transactions(self):
 
@@ -21,13 +21,13 @@ class BankSystem:
                 choice = int(input("Enter here: "))
                 match choice:
                     case 1:
-                        BankSystem.deposit(self,self.accounts)
+                        BankSystem.deposit(self)
                         break
                     case 2:
-                        BankSystem.withdraw(self,self.accounts)
+                        BankSystem.withdraw(self)
                         break
                     case 3:
-                        BankSystem.check_balance(self, self.accounts)
+                        BankSystem.check_balance(self)
                         break
                     case 4:
                         sys.exit(0)
@@ -36,7 +36,7 @@ class BankSystem:
             except ValueError:
                 print("Integer Only!")
 
-    def log_in():
+    def log_in(self):
 
             try:
                 while True:
@@ -46,7 +46,8 @@ class BankSystem:
                     if len(str(pin)) > 4:
                         print("4 digits of pin only!")
                     else:
-                        BankDatabase.BankDatabase.log_in_validation(account_number,pin)
+                        BankDatabase.BankDatabase.log_in_validation(self,account_number,pin)
+                        BankSystem.transactions(self)
                         break
             except ValueError:
                 print("Integer Input Only!")
@@ -82,7 +83,7 @@ class BankSystem:
                     case 1:
                         BankSystem.create_account()
                     case 2:
-                        BankSystem.log_in()
+                        BankSystem.log_in(self)
                         break
                     case 3:
                         break
@@ -92,26 +93,12 @@ class BankSystem:
             print("Integer Number Only!")
 
 
-    def deposit(self,accounts):
+    def deposit(self):
 
         try:
             deposit_money = int(input("Enter amount to deposit here: "))
-            
-            for account in accounts:
-               if account["account-number"] == BankSystem.get_hold_data(self):
-                    while True:
-                        pin = int(input("Enter your pin for confirmation: "))
-                        if account["pin"] == pin:
-                            account["balance"] = account["balance"] + deposit_money
-                            try:
-                                with open(self.file_path, "w") as file:
-                                    json.dump(accounts, file, indent=3)
-                            except FileNotFoundError:
-                                print("File not Found!")
-                            BankSystem.transactions(self)
-                            break
-                        else:
-                            print("Incorrect Pin!")
+            BankDatabase.BankDatabase.deposit(self, deposit_money)
+
         except ValueError:
             print("Integer Only!")
 
