@@ -9,5 +9,5 @@ Features:
 - Check Balance
 
 Additional:
-- Comes with Json files
-- Account Details will be stored to JSON Files
+- Used MySQL workbench server as database
+- Account number, pin, and balance is stored in mysql database
