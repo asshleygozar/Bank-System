@@ -51,7 +51,7 @@ class BankSystem:
             except ValueError:
                 print("Integer Input Only!")
 
-    def create_account():
+    def create_account(self):
 
         try:
             account_number = random.randint(100000,999999)
@@ -62,8 +62,10 @@ class BankSystem:
             else:
                 deposit = int(input("Please enter initial deposit: "))
                 BankDatabase.BankDatabase.create_account(account_number,pin,deposit)
+                print("Account created successfully!")
                 print(f"Here is you Account Number: {account_number}")
                 print(f"Here is your pin: {pin}")
+                BankSystem.action(self)
 
         except ValueError:
             print("Integer Only!")
@@ -81,6 +83,7 @@ class BankSystem:
                 match choice:
                     case 1:
                         BankSystem.create_account()
+                        break
                     case 2:
                         BankSystem.log_in(self)
                         break
@@ -111,7 +114,6 @@ class BankSystem:
     
     def check_balance(self):
         BankDatabase.BankDatabase.balance(self)
-        
        
 bank = BankSystem()
 bank.action()
