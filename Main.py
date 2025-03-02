@@ -2,7 +2,6 @@ import sys
 import random
 from Database import BankDatabase
 
-
 class BankSystem:
 
     def __init__(self):
@@ -11,11 +10,13 @@ class BankSystem:
     def transactions(self):
 
         while True:
+
             print("Choose your Transaction: ")
             print("1. Deposit")
             print("2. Withdraw")
             print("3. Check Balance")
             print("4. Exit")
+
             try:
                 choice = int(input("Enter here: "))
                 match choice:
@@ -68,6 +69,7 @@ class BankSystem:
                 BankSystem.action(self)
 
         except ValueError:
+            
             print("Integer Only!")
             
     
@@ -114,6 +116,9 @@ class BankSystem:
     
     def check_balance(self):
         BankDatabase.BankDatabase.balance(self)
+
+    def changePin():
+        pass
        
 bank = BankSystem()
 bank.action()
