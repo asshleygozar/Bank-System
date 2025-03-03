@@ -116,9 +116,8 @@ class BankSystem:
     
     def check_balance(self):
         BankDatabase.BankDatabase.balance(self)
-
-    def changePin():
-        pass
        
+    
+    
 bank = BankSystem()
 bank.action()
